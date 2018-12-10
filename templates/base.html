@@ -3,26 +3,30 @@
   <head>
     <title>Olaoluwa's blog</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro|Montserrat|Quicksand:400" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
   </head>
   <body>
     <header>
       <div class="nav-left">
-        <h1><a href="{% url 'home' %}">Olaoluwa's blog</a></h1>
+        <h1><a id="blogTitle" href="{% url 'home' %}">Olaoluwa's blog</a></h1>
       </div>
       <div class="nav-right">
+        {% if user.is_authenticated %}
+        <a>Hi {{ user.username }}!</a>
+        <p><a href="{% url 'logout' %}">Log out</a></p>
+
+        {% else %}
+        <p>You are not logged in.</p>
+        <a href="{% url 'login' %}">Log In</a>
+        <a href="{% url 'signup' %}">Sign up</a>
+        {% endif %}
         <a href="{% url 'post_new' %}">+ New Blog Post</a>
       </div>
 
     </header>
-    {% if user.is_authenticated %}
-    <p>Hi {{ user.username }}!</p>
-    <p><a href="{% url 'logout' %}">Log out</a></p>
 
-    {% else %}
-    <p>You are not logged in.</p>
-    <a href="{% url 'login' %}">Log In</a>
-    {% endif %}
 
     <div>
       {% block content %}
